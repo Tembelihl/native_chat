@@ -1,6 +1,7 @@
+
+
 const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
-    
     name:{
         type:String,
         required:true
@@ -14,25 +15,21 @@ const userSchema = new mongoose.Schema({
         type:String,
         reqiured:true
     },
-    image:{
-        type:String,
-        require:true
-    },
     friendRequests:[
         {
-            type:mongoose,Schema,Types,ObjectsId,
+            type:mongoose.Schema.Types.ObjectId,
             ref:"User"
         }
     ],
     friends:[
         {
-            type:mongoose,Schema,Types,ObjectsId,
+            type:mongoose.Schema.Types.ObjectId,
             ref:"User"
         }
     ],
     sentFriendRequests:[
         {
-            type:mongoose,Schema,Types,ObjectsId,
+            type:mongoose.Schema.Types.ObjectId,
             ref:"User"
         },
     ],
@@ -40,5 +37,3 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model("User",userSchema);
 module.exports = User
-
-

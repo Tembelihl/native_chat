@@ -19,7 +19,7 @@ const RegisterScreen = () => {
     }
 
     //send a POST request to the backend API to register the user
-    axios.post("http://172.17.142.125:8082",user).then((response) => {
+    axios.post("http://localhost:8081",user).then((response) => {
       console.log(response);
       Alert.alert(
         "Registration successful",
@@ -41,7 +41,7 @@ const RegisterScreen = () => {
     <View 
     style={{
       flex: 1,
-      backgroundColor: "white", // Corrected background color
+      backgroundColor: "white", 
       padding: 10,
       alignItems: "center",
     }}
