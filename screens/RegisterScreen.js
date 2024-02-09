@@ -1,12 +1,42 @@
-import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView, Pressable } from 'react-native'
+import { StyleSheet, Text, View, TextInput, KeyboardAvoidingView, Pressable, Alert } from 'react-native'
 import React from 'react'
 import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 const RegisterScreen = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [image, setImage] = useState("");
+  const navigation = useNavigation();
+  const handleRegister = () => {
+    const user = {
+      name:name,
+      email:email,
+      password:password,
+      image:image
+    }
+
+    //send a POST request to the backend API to register the user
+    axios.post("http://172.17.142.125:8082",user).then((response) => {
+      console.log(response);
+      Alert.alert(
+        "Registration successful",
+        "You have been registered Successfully"
+      );
+      setName("");
+      setEmail("");
+      setPassword("");
+      setImage("");
+    }).catch((error) => {
+      Alert.alert(
+        "Registration error",
+        "An error occured while registering"
+      )
+      console.log("registration failed", error);
+    });
+  };
   return (
     <View 
     style={{
@@ -38,8 +68,8 @@ const RegisterScreen = () => {
             </Text>
 
             <TextInput
-              value={name}
-              onChange={(text) => setName(text)}
+        value={name}
+        onChangeText={(text) => setName(text)}
               style={{
                 fontSize: email ? 18 : 18,
                 borderBottomColor: "gray",
@@ -59,8 +89,8 @@ const RegisterScreen = () => {
             </Text>
 
             <TextInput
-              value={email}
-              onChange={(text) => setEmail(text)}
+             value={email}
+             onChangeText={(text) => setEmail(text)}
               style={{
                 fontSize: email ? 18 : 18,
                 borderBottomColor: "gray",
@@ -80,7 +110,7 @@ const RegisterScreen = () => {
 
             <TextInput
               value={password}
-              onChange={(text) => setPassword(text)}
+              onChangeText={(text) => setPassword(text)}
               secureTextEntry={true}
               style={{
                 fontSize: email ? 18 : 18,
@@ -100,8 +130,8 @@ const RegisterScreen = () => {
             </Text>
 
             <TextInput
-              value={image}
-              onChange={(text) => setImage(text)}
+             value={image}
+             onChangeText={(text) => setImage(text)}
               style={{
                 fontSize: email ? 18 : 18,
                 borderBottomColor: "gray",
@@ -115,6 +145,7 @@ const RegisterScreen = () => {
           </View>
 
           <Pressable
+          onPress={handleRegister}
             style={{
               width: 200,
               backgroundColor: "#A389E8",
@@ -128,7 +159,7 @@ const RegisterScreen = () => {
             <Text style={{ color:"black",fontSize:16,fontWeight:"bold",textAlign:"center" }}>Register</Text>
           </Pressable>
 
-          <Pressable onPress={() => navigation.navigate("Register")} style={{marginTop:15}}>
+          <Pressable onPress={() => navigation.goBack()} style={{marginTop:15}}>
     <Text style={{textAlign:"center",color:"gray",fontSize:16}}>Existing user? Sign Up</Text>
   </Pressable>
         </View>
